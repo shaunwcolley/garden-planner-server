@@ -1,0 +1,3 @@
+[submodule "garden-planner"]
+	path = garden-planner
+	url = https://github.com/shaunwcolley/individual-project.git
