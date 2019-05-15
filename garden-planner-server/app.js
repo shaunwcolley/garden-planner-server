@@ -75,7 +75,10 @@ app.get('/api/plan/:planId', (req,res) => {
         model: models.Companion,
         as: 'companion'
       }]
-    }]
+    }],
+    order: [
+            ['cellNum', 'DESC']
+        ]
     }]
   })
   .then(plan => {
