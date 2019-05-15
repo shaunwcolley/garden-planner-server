@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     companionId: DataTypes.INTEGER
   }, {});
   Plant.associate = function(models) {
-    // associations can be defined here
+    Plant.belongsTo(models.Companion, {
+      as: 'companion',
+      foreignKey: 'companionId'
+    })
   };
   return Plant;
 };

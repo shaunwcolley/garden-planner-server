@@ -14,7 +14,11 @@ app.get('/', (req,res) => {
 })
 
 app.get('/api/plants', (req,res) => {
-  models.Plant.findAll()
+  models.Plant.findAll({include: [{
+    model: models.Companion,
+    as: 'companion'
+  }]
+})
   .then(result => res.json(result))
 })
 
