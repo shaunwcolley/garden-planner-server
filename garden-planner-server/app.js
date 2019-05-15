@@ -40,9 +40,38 @@ app.post('/api/save-plan', (req,res) =>{
       }
       bulkMaterial.push(cell)
     })
-    models.Cell.bulkCreate(bulkMaterial,{returning:true}).then(()=> res.send('cell saved'))
+    models.Cell.bulkCreate(bulkMaterial,{returning:true}).then(()=> {
+      res.json({success:true, message:"Plan Saved."}
+      )})
   })
-  //res.send('test')
+})
+
+app.get('/api/plans', (req,res) => {
+  models.Plan.findAll().then(plans => {
+    res.json(plans)
+  })
+})
+
+app.get('/api/plan/:planId', (req,res) => {
+  let id = parseInt(req.params.planId)
+  models.Plan.findByPk(id, {
+    include: [{
+    model: models.Cell,
+    as: 'cells',
+    include: [{
+      model: models.Plant,
+      as: 'plant',
+      include: [{
+        model: models.Companion,
+        as: 'companion'
+      }]
+    }]
+    }]
+  })
+  .then(plan => {
+    console.log(plan)
+    res.json(plan)
+  })
 })
 
 app.listen(PORT,function(){

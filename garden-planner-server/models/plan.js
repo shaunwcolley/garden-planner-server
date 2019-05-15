@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER
   }, {});
   Plan.associate = function(models) {
-    // associations can be defined here
+    Plan.hasMany(models.Cell, {
+      as: 'cells',
+      foreignKey: 'planId'
+    })
   };
   return Plan;
 };
