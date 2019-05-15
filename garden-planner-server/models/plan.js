@@ -2,7 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Plan = sequelize.define('Plan', {
     name: DataTypes.STRING,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    width: DataTypes.INTEGER,
+    height: DataTypes.INTEGER
   }, {});
   Plan.associate = function(models) {
     Plan.hasMany(models.Cell, {
