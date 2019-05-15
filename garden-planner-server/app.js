@@ -22,6 +22,29 @@ app.get('/api/plants', (req,res) => {
   .then(result => res.json(result))
 })
 
+app.post('/api/save-plan', (req,res) =>{
+  let name = req.body.planName
+  let plantsInPlan = Object.values(req.body.plantsInPlan)
+  let plan = models.Plan.build({
+    name: name,
+    userId: 1
+  })
+  plan.save().then(plan => {
+    console.log(plan.id)
+    let bulkMaterial = []
+    plantsInPlan.forEach((plant,index) => {
+      let cell = {
+        planId: plan.id,
+        plantId: plant.id,
+        cellNum: index + 1
+      }
+      bulkMaterial.push(cell)
+    })
+    models.Cell.bulkCreate(bulkMaterial,{returning:true}).then(()=> res.send('cell saved'))
+  })
+  //res.send('test')
+})
+
 app.listen(PORT,function(){
   console.log("Server is growing...")
 })
