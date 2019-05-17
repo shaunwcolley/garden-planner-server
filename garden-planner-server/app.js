@@ -35,7 +35,6 @@ app.post('/api/save-plan', (req,res) =>{
     height: height
   })
   plan.save().then(plan => {
-    console.log(plan.id)
     let bulkMaterial = []
     plantsInPlan.forEach((plant,index) => {
       let cell = {
@@ -49,6 +48,28 @@ app.post('/api/save-plan', (req,res) =>{
       res.json({success:true, message:"Plan Saved."}
       )})
   })
+})
+
+app.post('/api/update-plan', (req,res) => {
+  let plantsInPlan = Object.values(req.body.plantsInPlan)
+  let message = []
+  plantsInPlan.forEach((plant,index) => {
+      setTimeout(() => {if(plant){
+        if(plant.cellId != null){
+          let cellId = plant.cellId
+          models.Cell.update({
+            plantId: plant.id
+          },
+            {
+              where: {
+              id: cellId
+            }
+          }).then((updatedPlant) => console.log(updatedPlant))
+        }
+
+      }},2500)
+  })
+  res.json({message: "Cells updated"})
 })
 
 app.get('/api/plans/:userId', (req,res) => {
