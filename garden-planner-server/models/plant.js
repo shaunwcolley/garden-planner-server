@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       as: 'companion',
       foreignKey: 'companionId'
     })
+    Plant.hasMany(models.Cell, {
+      as: 'cells',
+      foreignKey: 'plantId'
+    })
   };
   return Plant;
 };
