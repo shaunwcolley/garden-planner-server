@@ -1,17 +1,21 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const axios = require('axios')
-const app = express()
-const PORT = process.env.PORT || 8080
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const axios = require('axios');
+const app = express();
+const PORT = process.env.PORT || 8080;
 
-app.use(cors())
-app.use(bodyParser.json())
-models = require('./models')
+app.use(cors());
+app.use(bodyParser.json());
+
+const userAuthRoutes = require('./routes/userAuth')
+const models = require('./models');
+
+app.use('/', userAuthRoutes)
 
 app.get('/', (req,res) => {
-  res.redirect('/api/plants')
-})
+  res.redirect('/api/plants');
+});
 
 app.get('/api/plants', (req,res) => {
   models.Plant.findAll({include: [{
