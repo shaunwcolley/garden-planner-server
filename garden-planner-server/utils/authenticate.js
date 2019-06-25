@@ -16,3 +16,5 @@ function authenticate(req, res, next) {
     res.status(401).json({message: 'Invalid Token', err: err});
   })
 }
+
+module.exports = authenticate;

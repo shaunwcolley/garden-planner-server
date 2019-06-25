@@ -9,7 +9,8 @@ require('dotenv').config();
 app.use(cors());
 app.use(bodyParser.json());
 
-const userAuthRoutes = require('./routes/userAuth')
+const authenticate = require('./utils/authenticate');
+const userAuthRoutes = require('./routes/userAuth');
 const models = require('./models');
 
 app.use('/', userAuthRoutes)
