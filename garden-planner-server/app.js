@@ -19,7 +19,7 @@ app.get('/', (req,res) => {
   res.redirect('/api/plants');
 });
 
-app.get('/api/plants', (req,res) => {
+app.get('/api/plants', authenticate, (req,res) => {
   models.Plant.findAll({include: [{
     model: models.Companion,
     as: 'companion'
@@ -28,7 +28,7 @@ app.get('/api/plants', (req,res) => {
   .then(result => res.json(result))
 })
 
-app.post('/api/save-plan', (req,res) =>{
+app.post('/api/save-plan', authenticate, (req,res) =>{
   let name = req.body.planName
   let width = req.body.width
   let height = req.body.height
@@ -56,7 +56,7 @@ app.post('/api/save-plan', (req,res) =>{
   })
 })
 
-app.post('/api/update-plan', (req,res) => {
+app.post('/api/update-plan', authenticate, (req,res) => {
   let plantsInPlan = Object.values(req.body.plantsInPlan)
   let message = []
   plantsInPlan.forEach((plant,index) => {
@@ -78,8 +78,8 @@ app.post('/api/update-plan', (req,res) => {
   res.json({message: "Cells updated"})
 })
 
-app.get('/api/plans/:userId', (req,res) => {
-  let userId = req.params.userId
+app.get('/api/plans/:userId', authenticate, (req,res) => {
+  let userId = parseInt(req.params.userId)
   models.Plan.findAll({
     where: {
       userId: userId
@@ -89,7 +89,7 @@ app.get('/api/plans/:userId', (req,res) => {
   })
 })
 
-app.get('/api/plan/:planId', (req,res) => {
+app.get('/api/plan/:planId', authenticate, (req,res) => {
   let id = parseInt(req.params.planId)
   models.Plan.findByPk(id, {
     include: [{
