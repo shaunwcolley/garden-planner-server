@@ -12,8 +12,9 @@ router.post('/register', (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const pass = bcrypt.hashSync(req.body.pass, saltRounds);
-  const zipCode = req.body.zipCode;
+  const zipCode = req.body.zipcode;
   const favVeg = req.body.favVeg;
+  console.log(zipCode);
   models.User.findOne({
     where: {
       email,
@@ -44,7 +45,7 @@ router.post('/login', (req, res) => {
     }
   }).then((user) => {
     if(!user) {
-      res.json({success: false, message: 'Invalid email.'});
+      res.json({success: false, message: 'Invalid email. Please re-enter or register above.'});
       return
     }
     bcrypt.compare(loginPass, user.pass, (err, response) => {
