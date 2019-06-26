@@ -11,9 +11,11 @@ app.use(bodyParser.json());
 
 const authenticate = require('./utils/authenticate');
 const userAuthRoutes = require('./routes/userAuth');
+const profileRoutes = require('./routes/profile');
 const models = require('./models');
 
-app.use('/', userAuthRoutes)
+app.use('/', userAuthRoutes);
+app.use('/', profileRoutes);
 
 app.get('/', (req,res) => {
   res.redirect('/api/plants');
