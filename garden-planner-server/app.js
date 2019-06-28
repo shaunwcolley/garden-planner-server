@@ -114,6 +114,34 @@ app.get('/api/plan/:planId', authenticate, (req,res) => {
     res.json(plan)
   })
 })
+let difference = [];
+function sym(a, b) {
+
+  for(let i = 0; i < a.length; i++) {
+    for(let j = 0; j < b.length; j++){
+      if(a[i] == b[j]) {
+        break
+      }
+      else if (j == b.length - 1 && a[i] !== b[j]) {
+        difference.push(a[i])
+      }
+    }
+  }
+  for(let i = 0; i < b.length; i++) {
+    for(let j = 0; j < a.length; j++){
+      if(b[i] == a[j]) {
+        break
+      }
+      else if (j == a.length - 1 && b[i] !== a[j]) {
+        difference.push(b[i])
+      }
+    }
+  }
+  return difference
+}
+
+let a = sym([1,2,3],[5,2,1,4])
+console.log(a)
 
 app.listen(PORT,function(){
   console.log("Server is growing...")
