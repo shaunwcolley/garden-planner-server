@@ -21,4 +21,21 @@ router.get('/api/profile/:id', (req,res) => {
   )
 })
 
+router.post('/api/profile/update/:id', (req,res) => {
+  const id = parseInt(req.params.id)
+  
+  models.User.update({
+    firstName,
+    lastName,
+    email,
+    favVeg,
+    zipcode
+  }, {
+    where: {
+      id,
+    }
+  })
+  res.json({success:true, message:'eventual update', user: id, apple: 'pie'})
+})
+
 module.exports = router;
