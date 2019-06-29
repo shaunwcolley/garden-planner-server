@@ -6,7 +6,7 @@ const router = express.Router();
 const authenticate = require('../utils/authenticate');
 const models = require('../models');
 
-router.get('/api/profile/:id', (req,res) => {
+router.get('/api/profile/:id', authenticate, (req,res) => {
   const id = req.params.id;
 
   models.User.findByPk(id, { attributes: [
@@ -21,21 +21,23 @@ router.get('/api/profile/:id', (req,res) => {
   )
 })
 
-router.post('/api/profile/update/:id', (req,res) => {
+router.post('/api/profile/update/:id', authenticate, (req,res) => {
   const id = parseInt(req.params.id)
-  
+  const firstName = req.body.firstName
+  const lastName = req.body.lastName
+  const favVeg = req.body.favVeg
+  const zipCode = req.body.zipCode
   models.User.update({
     firstName,
     lastName,
-    email,
     favVeg,
-    zipcode
+    zipCode
   }, {
     where: {
       id,
     }
-  })
-  res.json({success:true, message:'eventual update', user: id, apple: 'pie'})
+  }).then(updatedUser => console.log(updatedUser))
+  res.json({ success:true, message:'eventual update' })
 })
 
 module.exports = router;
