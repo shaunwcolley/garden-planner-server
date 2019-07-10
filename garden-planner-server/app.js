@@ -12,10 +12,12 @@ app.use(bodyParser.json());
 const authenticate = require('./utils/authenticate');
 const userAuthRoutes = require('./routes/userAuth');
 const profileRoutes = require('./routes/profile');
+const calendarRoutes = require('./routes/calendar');
 const models = require('./models');
 
 app.use('/', userAuthRoutes);
 app.use('/', profileRoutes);
+app.use('/', calendarRoutes);
 
 app.get('/', (req,res) => {
   res.redirect('/api/plants');
