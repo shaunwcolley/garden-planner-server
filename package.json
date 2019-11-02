@@ -18,6 +18,6 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.14",
     "pg": "^7.11.0",
-    "sequelize": "^5.8.12"
+    "sequelize": "^5.15.1"
   }
 }
